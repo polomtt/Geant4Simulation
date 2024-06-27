@@ -1,0 +1,29 @@
+# Macro file for example B1
+# 
+# To be run preferably in batch, without graphics:
+# % exampleB1 run3.mac
+#
+/control/verbose 1
+/run/verbose 1
+/tracking/verbose 2
+
+#/run/numberOfThreads 2
+
+# Initialize kernel
+/run/initialize
+
+/gps/particle neutron
+/gps/pos/type Point
+#/gps/pos/type Plane
+#/gps/pos/shape Circle
+#/gps/pos/radius 2.54 cm
+/gps/pos/centre -5. 60.5 50. cm
+/gps/direction 0 0 -1
+/gps/energy 3 MeV
+
+/analysis/verbose 1
+/analysis/setFileName output
+
+/run/printProgress 1000
+
+/run/beamOn 1

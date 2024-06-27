@@ -1,0 +1,22 @@
+/run/initialize
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/ang/type focused
+
+/gps/ang/focuspoint -1100.  600. 4500. mm
+
+/gps/pos/centre -3.0 1.8 0. m
+/gps/pos/radius 1.6 m
+
+/gps/pos/halfz 4.0 m
+
+/gps/energy 0.661657 MeV
+/analysis/verbose 1
+/analysis/setFileName output_Cs137_cleandem_foucus_centro_POS_B_CeBr_1000000000
+
+/run/printProgress 10000000
+/run/beamOn 1000000000
+#/run/beamOn 10
+
+
