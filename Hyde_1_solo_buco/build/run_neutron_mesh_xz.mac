@@ -1,0 +1,28 @@
+# Define scoring mesh
+/score/create/boxMesh boxMeshPS
+/score/mesh/boxSize 27.5 82.5 137.5 um
+/score/mesh/translate/xyz 27.5 82.5 0. um
+/score/mesh/nBin 1 330 550
+/score/quantity/energyDeposit boxMeshPS keV
+/score/close
+
+/score/list
+
+/control/verbose 0
+/run/verbose 0
+/tracking/verbose 0
+/run/initialize
+/gps/particle neutron
+/gps/pos/type Plane
+/gps/pos/shape Square
+/gps/pos/halfx 27.5 um
+/gps/pos/halfy 82.5 um
+/gps/pos/centre 0.0275 0.0825 0.3 mm
+/gps/ang/type planar
+/gps/energy 0.025 eV
+
+/analysis/setFileName histo_neut.root
+/run/printProgress 10000
+/run/beamOn 100000
+
+/score/dumpQuantityToFile boxMeshPS boxMeshPS mesh_output
