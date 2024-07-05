@@ -16,6 +16,6 @@
 ## Hyde_planare [here](Hyde_planare) 
 
 ## Script_for_data_analysis [here](Script_for_data_analysis)
-
+  - Serie di script utili per analizzare i risultati delle simulazioni
 ## simple_detector [here](simple_detector)
 
