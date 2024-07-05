@@ -1,0 +1,4 @@
+# mesh name: boxMeshPS
+# primitive scorer name: boxMeshPS
+# iX, iY, iZ, total(value) [MeV], total(val^2), entry
+0,0,0,431220.6840785588,737628.5523752418,997086

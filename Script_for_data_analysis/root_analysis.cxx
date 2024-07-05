@@ -82,7 +82,7 @@ return ene_max;
 
 void root_analysis_alpha(){
 // read_par_online_ana("simulation_results/histo_alfa",2.5,"histo_perov_alpha.png");
-  TCanvas* cnv_histo_0 = new TCanvas();
+TCanvas* cnv_histo_0 = new TCanvas();
 
 read_par_online_ana("histo_alfa_1000000ev_planar",6.,"histo_perov_alpha_planar.png");
 //read_par_online_ana("histo_alfa_100000ev_iso",6.,"histo_perov_alpha_iso.png");

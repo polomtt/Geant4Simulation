@@ -124,7 +124,6 @@ void B1EventAction::BeginOfEventAction(const G4Event*)
 void B1EventAction::EndOfEventAction(const G4Event* evt)
 {
 	 //Hits collections
-  //  
   G4HCofThisEvent* HCE = evt->GetHCofThisEvent();
   if(!HCE) return;
                
@@ -136,15 +135,13 @@ void B1EventAction::EndOfEventAction(const G4Event* evt)
   
   //Energy in crystals : identify 'good events'
    
-  G4THitsMap<G4double>* evtMap = 
-                     (G4THitsMap<G4double>*)(HCE->GetHC(fCollID_cryst));
+  G4THitsMap<G4double>* evtMap = (G4THitsMap<G4double>*)(HCE->GetHC(fCollID_cryst));
   
   G4double edep=0; 
              
   std::map<G4int,G4double*>::iterator itr;
   for (itr = evtMap->GetMap()->begin(); itr != evtMap->GetMap()->end(); itr++)
   {
-    ///G4int copyNb  = (itr->first);
     edep = *(itr->second); 
   }  
 
@@ -152,7 +149,7 @@ void B1EventAction::EndOfEventAction(const G4Event* evt)
   G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
   
   if (edep > 0. || fLight > 0.)
-  {
+  { 
     analysisManager->FillNtupleDColumn(0,edep); // energy deposited on the CeBr3
     analysisManager->FillNtupleDColumn(1,fLight); // Stilbene light output
     analysisManager->AddNtupleRow();
