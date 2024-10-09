@@ -149,6 +149,7 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
   // |_____\__,_|\__, |\___|_|    |_.__/ \___/|_|  \___/ 
   //             |___/                                  
 
+  float percentuale_arrichimento_boro_10 = 90.;
   G4Box* strato_1u_sup_box = new G4Box("Envelope",larghezza_Al,larghezza_Al,spessore_mat_att); 
 
   G4Material* act_Mat;
@@ -157,8 +158,8 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
   G4Isotope* iso_B10 = new G4Isotope("Boron_10",5,10,10*g/mole);
   G4Isotope* iso_B11 = new G4Isotope("Boron_11",5,11,11*g/mole);
   G4Element* elB     = new G4Element("Boron","B",2);
-  elB->AddIsotope(iso_B10,99.*perCent);
-  elB->AddIsotope(iso_B11,1.*perCent);
+  elB->AddIsotope(iso_B10,percentuale_arrichimento_boro_10.*perCent);
+  elB->AddIsotope(iso_B11,(1.-percentuale_arrichimento_boro_10)*perCent);
 
   // Carbonio
   G4Material* el_C = nist->FindOrBuildMaterial("G4_C");
@@ -166,7 +167,7 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
   // Carburo di boro
   float density_boro_carbide = 2.52 *g/cm3;
   act_Mat = new G4Material("act_Mat",density_boro_carbide,2);
-  act_Mat->AddMaterial(el_C,20.*perCent);
+  act_Mat->AddMaterial(el_C,C.*perCent);
   act_Mat->AddElement(elB,80.*perCent);
   // act_Mat = nist->FindOrBuildMaterial("G4_Galactic");
 
