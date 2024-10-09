@@ -126,6 +126,7 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
 
   larghezza_Al = ((float)larghezza_Al)*1e-6*m*0.5;
   spessore_mat_att = ((float)spessore_mat_att)*1e-6*m*0.5;
+  spessore_Al = ((float)spessore_Al)*1e-6*m*0.5;
 
   //  ____  _                             _ _                 _       _       
   // | __ )| | ___   ___ ___ ___     __ _| | |_   _ _ __ ___ (_)_ __ (_) ___  
