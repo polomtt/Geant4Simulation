@@ -21,10 +21,10 @@
 ### Script_for_data_analysis [here](Script_for_data_analysis) :hammer_and_wrench:
   - Serie di script utili per analizzare i risultati delle simulazioni
 
-### simple_detector [here](simple_detector) :package:
+### Simple detector [here](simple_detector) :package:
   - Un box in grado di rivelare l'energia depositata, ottimo come punto di partenza
   
-### Simulazione boron carbide [here](Sim_Boro_carbide) :parrot:
+### Simulazione boron carbide [here](Sim_Boro_carbide) :parrot: :woman_light_skin_tone_blond_hair:
   - Simulazioen con un layer di carburo di boro e blocco di allumini ch efa da sensore
   - Il blocco di alluminio ha un filtro per alfa e ioni Li7, quindi il blocco di Al è usato due volte come rivelatore
 
