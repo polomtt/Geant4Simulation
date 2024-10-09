@@ -1,0 +1,28 @@
+# Define scoring mesh
+/score/create/boxMesh boxMeshPS
+/score/mesh/boxSize 10 10 100 cm
+/score/mesh/translate/xyz 0 0 15 cm
+/score/mesh/nBin 1 1 1000
+/score/quantity/energyDeposit boxMeshPS keV
+/score/close
+
+/score/list
+
+/control/verbose 0
+/run/verbose 0
+/tracking/verbose 0
+/run/initialize
+/gps/particle proton
+/gps/pos/type Plane
+/gps/direction 0 0 1
+/gps/pos/shape Circle
+/gps/pos/radius 1. mm
+/gps/pos/centre 0.0 0.0 -50 mm
+/gps/ang/type planar
+/gps/energy 4.5 MeV
+/analysis/setFileName histo_xray.root
+/run/printProgress 1000
+/run/beamOn 100000
+
+#/score/drawProjection boxMeshPS boxMeshPS
+/score/dumpQuantityToFile boxMeshPS boxMeshPS mesh_output_4500keV

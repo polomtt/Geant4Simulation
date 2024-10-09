@@ -1,4 +1,4 @@
-#include <iostream>
+ #include <iostream>
 #include <stdlib.h>
 
 struct newEvent_t {
@@ -39,7 +39,7 @@ double distance_from_hole, radius_hole, pixel_size;
     std::ifstream in_myfile;
     in_myfile.open("hole_dimension");
     in_myfile>>distance_from_hole;
-    in_myfile>>radius_hole;
+    // in_myfile>>radius_hole;
     in_myfile>>pixel_size;
     in_myfile.close();
 
@@ -51,7 +51,7 @@ myfile.close();
 h_qlong_ch0->SetTitle(TString::Format("hisot_%.1f_%.1f_%.1f",distance_from_hole,radius_hole,pixel_size));
 // cnv_histo_0->SaveAs(TString::Format("final_graph/histo_%.1f_%.1f_%.1f.png",distance_from_hole,radius_hole,pixel_size));
 h_qlong_ch0->SaveAs(TString::Format("final_graph/histo_%.1f_%.1f_%.1f.root",distance_from_hole,radius_hole,pixel_size));
-
+h_qlong_ch0->Draw();
 return;
 }
 
@@ -93,7 +93,7 @@ infile.close();
 ofstream myfile;
 myfile.open ("efficenza",ios::app);
 if (insert_head_text){
-    myfile<<"distance_from_hole;radius_hole;pixel_size;det_ev;tot_ev"<<endl;
+    myfile<<"spess_mat_att;radius_hole;pixel_size;det_ev;tot_ev"<<endl;
 }
 myfile.close();
 read_par_online_ana("histo_neut");

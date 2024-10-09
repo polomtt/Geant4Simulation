@@ -1,8 +1,8 @@
-/home/matteo/Dottorato/Simulazioni/cleandem_all_auto/build/CMakeFiles/exampleB1.dir
-/home/matteo/Dottorato/Simulazioni/cleandem_all_auto/build/CMakeFiles/B1.dir
-/home/matteo/Dottorato/Simulazioni/cleandem_all_auto/build/CMakeFiles/edit_cache.dir
-/home/matteo/Dottorato/Simulazioni/cleandem_all_auto/build/CMakeFiles/rebuild_cache.dir
-/home/matteo/Dottorato/Simulazioni/cleandem_all_auto/build/CMakeFiles/list_install_components.dir
-/home/matteo/Dottorato/Simulazioni/cleandem_all_auto/build/CMakeFiles/install.dir
-/home/matteo/Dottorato/Simulazioni/cleandem_all_auto/build/CMakeFiles/install/local.dir
-/home/matteo/Dottorato/Simulazioni/cleandem_all_auto/build/CMakeFiles/install/strip.dir
+/home/matteo/Dottorato/Geant4Simulation/cleandem_all_auto/build/CMakeFiles/exampleB1.dir
+/home/matteo/Dottorato/Geant4Simulation/cleandem_all_auto/build/CMakeFiles/B1.dir
+/home/matteo/Dottorato/Geant4Simulation/cleandem_all_auto/build/CMakeFiles/edit_cache.dir
+/home/matteo/Dottorato/Geant4Simulation/cleandem_all_auto/build/CMakeFiles/rebuild_cache.dir
+/home/matteo/Dottorato/Geant4Simulation/cleandem_all_auto/build/CMakeFiles/list_install_components.dir
+/home/matteo/Dottorato/Geant4Simulation/cleandem_all_auto/build/CMakeFiles/install.dir
+/home/matteo/Dottorato/Geant4Simulation/cleandem_all_auto/build/CMakeFiles/install/local.dir
+/home/matteo/Dottorato/Geant4Simulation/cleandem_all_auto/build/CMakeFiles/install/strip.dir

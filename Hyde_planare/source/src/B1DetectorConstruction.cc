@@ -142,14 +142,14 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
     int act_material_choice = 3;
     float spes_strat_sup = 1e-6 * m *0.5;
     std::ifstream myfile;
-    // myfile.open("hole_dimension");
-    // myfile>>spes_strat_sup;
-    // myfile>>pixel_size;
-    // myfile>>act_material_choice;
-    // myfile.close();
+    myfile.open("hole_dimension");
+    myfile>>spes_strat_sup;
+    myfile>>pixel_size;
+    myfile>>act_material_choice;
+    myfile.close();
 
-    // pixel_size = ((float)pixel_size)*1e-6*m*0.5;
-    // spes_strat_sup = ((float)spes_strat_sup)*1e-6*m*0.5;
+    pixel_size = ((float)pixel_size)*1e-6*m*0.5;
+    spes_strat_sup = ((float)spes_strat_sup)*1e-6*m*0.5;
 
     //matrice silicio
     G4Box* solidEnv = new G4Box("Envelope",pixel_size,pixel_size,lenght_silicon); //its size

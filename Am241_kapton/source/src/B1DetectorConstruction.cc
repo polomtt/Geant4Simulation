@@ -80,6 +80,37 @@ G4Box* solidWorld =  new G4Box("World",0.5*world_sizeXY, 0.5*world_sizeXY, 0.5*w
 G4LogicalVolume* logicWorld = new G4LogicalVolume(solidWorld,world_mat,"World");
 G4VPhysicalVolume* physWorld = new G4PVPlacement(0,G4ThreeVector(),logicWorld,"World",0,false,0,checkOverlaps);
 
+//  __  __       _            _       _ _ 
+// |  \/  | __ _| |_ ___ _ __(_) __ _| (_)
+// | |\/| |/ _` | __/ _ \ '__| |/ _` | | |
+// | |  | | (_| | ||  __/ |  | | (_| | | |
+// |_|  |_|\__,_|\__\___|_|  |_|\__,_|_|_|
+                                       
+    // if(act_material_choice == 2)
+    // {
+    // G4Isotope* iso_B10 = new G4Isotope("Boron_10",5,10,10*g/mole);
+    // G4Isotope* iso_B11 = new G4Isotope("Boron_11",5,11,11*g/mole);
+    // G4Element* elB  = new G4Element("Boron","B",2);
+    // elB->AddIsotope(iso_B10,99.*perCent);
+    // elB->AddIsotope(iso_B11,1.*perCent);
+    // float density = 2.46 *g/cm3;
+    // act_Mat = new G4Material("act_Mat",density,1);
+    // //act_Mat->AddMaterial(Fluorine,50.*perCent);
+    // act_Mat->AddElement(elB,100.*perCent);
+    // }
+    // else if(act_material_choice==1)
+    // {
+    // G4Isotope* iso_Li6 = new G4Isotope("Litium_6",3,6,6.01512*g/mole);
+    // G4Isotope* iso_Li7 = new G4Isotope("Litium_7",3,7,7.01600*g/mole);
+    // G4Element* elLi  = new G4Element("Litium","Li",2);
+    // elLi->AddIsotope(iso_Li6,95.*perCent);
+    // elLi->AddIsotope(iso_Li7,5.*perCent);
+    // float density = 2.54 *g/cm3;
+    // act_Mat = new G4Material("act_Mat",density,2);
+    // act_Mat->AddMaterial(Fluorine,50.*perCent);
+    // act_Mat->AddElement(elLi,50.*perCent);
+    // }
+
 /***************************/
 // Silicio
 /***************************/

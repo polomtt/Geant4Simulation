@@ -46,3 +46,5 @@
 /vis/viewer/set/autoRefresh true
 /vis/viewer/refresh
 /vis/verbose warnings
+/vis/set/touchable World 0 crystal2 0
+/vis/viewer/select viewer-0 (OpenGLStoredQt)
