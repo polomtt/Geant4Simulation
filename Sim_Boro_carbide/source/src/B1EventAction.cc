@@ -100,13 +100,12 @@ void B1EventAction::EndOfEventAction(const G4Event* event)
     // analysisManager->FillNtupleDColumn(1,edep);
   }  
 
-  if(edep_cry_1>0 || edep_cry_2>0){
-    analysisManager->FillNtupleDColumn(0,edep_cry_1);
-    analysisManager->FillNtupleDColumn(1,edep_cry_2);
-  }
 
+  analysisManager->FillNtupleDColumn(0,edep_cry_1);
+  analysisManager->FillNtupleDColumn(1,edep_cry_2);
   analysisManager->AddNtupleRow();
- 
+
+
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

@@ -56,11 +56,9 @@
 /gps/pos/shape Square
 /gps/pos/halfx 500.000 um
 /gps/pos/halfy 500.000 um
-/gps/pos/centre 0. 0. 0.3 mm
+/gps/pos/centre 0. 0. 5. cm
 /gps/ang/type planar
 /gps/energy 0.025 eV
 /analysis/setFileName histo_neut.root
 /run/printProgress 10000
-/run/beamOn 100
-/analysis/h1/getVector
-/analysis/h2/getVector
+/run/beamOn 100000

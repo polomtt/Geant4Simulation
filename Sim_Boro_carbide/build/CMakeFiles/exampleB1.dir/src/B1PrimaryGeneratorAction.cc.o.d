@@ -1,7 +1,7 @@
 CMakeFiles/exampleB1.dir/src/B1PrimaryGeneratorAction.cc.o: \
- /home/matteo/Dottorato/Geant4Simulation/Sim_AnnaGiulia/source/src/B1PrimaryGeneratorAction.cc \
+ /home/matteo/Dottorato/Geant4Simulation/Sim_Boro_carbide/source/src/B1PrimaryGeneratorAction.cc \
  /usr/include/stdc-predef.h \
- /home/matteo/Dottorato/Geant4Simulation/Sim_AnnaGiulia/source/include/B1PrimaryGeneratorAction.hh \
+ /home/matteo/Dottorato/Geant4Simulation/Sim_Boro_carbide/source/include/B1PrimaryGeneratorAction.hh \
  /usr/local/include/Geant4/G4VUserPrimaryGeneratorAction.hh \
  /usr/local/include/Geant4/G4GeneralParticleSource.hh \
  /usr/local/include/Geant4/globals.hh /usr/local/include/Geant4/G4ios.hh \
