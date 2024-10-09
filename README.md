@@ -23,4 +23,8 @@
 
 ### simple_detector [here](simple_detector) :package:
   - Un box in grado di rivelare l'energia depositata, ottimo come punto di partenza
+  
+### Simulazione boro carbide [here](Sim_Boro_carbide) :package:
+  - Simulazioen con un layer di carburo di boro e blocco di allumini ch efa da sensore
+  - Il blocco di alluminio ha un filtro per alfa e ioni Li7, quindi il blocco di Al è usato due volte come rivelatore
 
