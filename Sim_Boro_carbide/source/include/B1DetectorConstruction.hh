@@ -44,6 +44,10 @@ class B1DetectorConstruction : public G4VUserDetectorConstruction
     B1DetectorConstruction();
     virtual ~B1DetectorConstruction();
     
+    int numDetectors;
+
+    int getVar() const { return numDetectors; }  // Getter
+
   public:
     virtual G4VPhysicalVolume* Construct();
     virtual void ConstructSDandField();

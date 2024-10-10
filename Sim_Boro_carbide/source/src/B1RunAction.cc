@@ -100,6 +100,13 @@ void B1RunAction::EndOfRunAction(const G4Run* run)
 
 void B1RunAction::BeginOfRunAction(const G4Run* run)  
 { 
+  
+  // Ottieni l'istanza della classe B1DetectorConstruction
+  const B1DetectorConstruction* detectorConstruction = 
+  static_cast<const B1DetectorConstruction*>(G4RunManager::GetRunManager()->GetUserDetectorConstruction());
+  // Accedi al membro non statico numDetectors
+  int N_detector = detectorConstruction->numDetectors;
+
   // Create/get analysis manager 
   G4AnalysisManager* analysisManager = G4AnalysisManager::Instance(); 
   analysisManager->SetVerboseLevel(1); 
@@ -111,9 +118,12 @@ void B1RunAction::BeginOfRunAction(const G4Run* run)
 
 
   analysisManager->CreateNtuple("MyNtuple", "Edep");
- // X = D in CreateNtupleXColumn stands for G4double (I,F,D,S) 
-  analysisManager->CreateNtupleDColumn("Eabs_cry_1");
-  analysisManager->CreateNtupleDColumn("Eabs_cry_2");
+  
+  for (int i = 0; i < N_detector; i++){
+      analysisManager->CreateNtupleDColumn("Eabs_alfa_"+std::to_string(i));
+      analysisManager->CreateNtupleDColumn("Eabs_ions_"+std::to_string(i));
+  }
+
   analysisManager->FinishNtuple();
 
 }

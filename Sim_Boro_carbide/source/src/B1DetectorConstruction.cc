@@ -69,7 +69,9 @@
 B1DetectorConstruction::B1DetectorConstruction()
 : G4VUserDetectorConstruction(),
   fScoringVolume(0)
-{ }
+{ 
+  numDetectors = 5;
+}
 
 
 B1DetectorConstruction::~B1DetectorConstruction()
@@ -137,10 +139,16 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
 
   G4Box* solidEnv = new G4Box("Envelope",larghezza_Al,larghezza_Al,spessore_Al);     
   G4Material* Al_material = nist->FindOrBuildMaterial("G4_Al");
-  G4LogicalVolume* Al_detector = new G4LogicalVolume(solidEnv,Al_material,"Al_detector");
-  G4VisAttributes* Color_Al = new G4VisAttributes(G4Colour::Blue());
-  Al_detector->SetVisAttributes(Color_Al);
-  new G4PVPlacement(0,G4ThreeVector(0,0,0),Al_detector,"crystal",logicWorld,false,0,checkOverlaps);
+
+  
+  G4LogicalVolume* Al_detector_array[numDetectors];
+  float pos_z_cubo_al = spessore_Al*-1;
+
+  for (int i = 0; i < numDetectors; ++i) {
+    Al_detector_array[i] = new G4LogicalVolume(solidEnv, Al_material, "Al_detector_" + std::to_string(i));
+    new G4PVPlacement(0,G4ThreeVector(0,0,pos_z_cubo_al),Al_detector_array[i],"crystal_" + std::to_string(i),logicWorld,false,0,checkOverlaps);
+    pos_z_cubo_al = pos_z_cubo_al - (2*spessore_Al + 2.*mm);
+  }
 
   //  _                            _                     
   // | |    __ _ _   _  ___ _ __  | |__   ___  _ __ ___  
@@ -171,10 +179,16 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
   act_Mat->AddElement(elB,80.*perCent);
   // act_Mat = nist->FindOrBuildMaterial("G4_Galactic");
 
-  G4LogicalVolume* active_material_sup = new G4LogicalVolume(strato_1u_sup_box,act_Mat,"active_material_part_detector_superficie");
-  G4VisAttributes* Color_Li = new G4VisAttributes(G4Colour::Red());
-  active_material_sup->SetVisAttributes(Color_Li);
-  new G4PVPlacement(0,G4ThreeVector(0,0,spessore_Al+free_space+spessore_mat_att),active_material_sup,"active_material_sup",logicWorld,false,0,checkOverlaps);
+  G4LogicalVolume* active_material_sup_array[numDetectors];
+  float pos_z_layer_B = spessore_mat_att+free_space;
+  G4VisAttributes* Color_B4C = new G4VisAttributes(G4Colour::Red());
+
+  for (int i = 0; i < numDetectors; ++i) {
+    active_material_sup_array[i] = new G4LogicalVolume(strato_1u_sup_box, act_Mat, "active_material_part_detector_superficie" + std::to_string(i));
+    active_material_sup_array[i]->SetVisAttributes(Color_B4C);
+    new G4PVPlacement(0,G4ThreeVector(0,0,pos_z_layer_B),active_material_sup_array[i],"active_material_sup" + std::to_string(i),logicWorld,false,0,checkOverlaps);
+    pos_z_layer_B = pos_z_layer_B - (2*spessore_Al + 2.*mm);
+  }  
 
   return physWorld;
 }
@@ -185,23 +199,35 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
 void B1DetectorConstruction::ConstructSDandField()
 {
   G4SDManager::GetSDMpointer()->SetVerboseLevel(1);
-  
-    G4MultiFunctionalDetector* cryst = new G4MultiFunctionalDetector("crystal");
-    G4SDManager::GetSDMpointer()->AddNewDetector(cryst);
-    G4VPrimitiveScorer* primitiv1 = new G4PSEnergyDeposit("edep");
-    G4SDParticleFilter* alphaFilter = new G4SDParticleFilter("alphaFilter");
-    alphaFilter->add("alpha");
-    primitiv1->SetFilter(alphaFilter);
-    cryst->RegisterPrimitive(primitiv1);
-    SetSensitiveDetector("Al_detector",cryst);
 
-    G4MultiFunctionalDetector* cryst_2 = new G4MultiFunctionalDetector("crystal2");
-    G4SDManager::GetSDMpointer()->AddNewDetector(cryst_2);
+      
+  G4MultiFunctionalDetector* alfa_detector[numDetectors];
+  G4VPrimitiveScorer* primitiv1[numDetectors]; 
+  G4SDParticleFilter* alphaFilter[numDetectors]; = new G4SDParticleFilter("alphaFilter");
+  // alphaFilter->add("alpha");
+  // primitiv1->SetFilter(alphaFilter);
+
+  for (int i = 0; i < numDetectors; ++i) {
+      primitiv1[i]= new G4PSEnergyDeposit("edep");
+      alfa_detector[i] = new G4MultiFunctionalDetector("alfa_detector_" + std::to_string(i));
+      alphaFilter[i]; = new G4SDParticleFilter("alphaFilter");
+      alphaFilter[i]->add("alpha");
+      primitiv1[i]->SetFilter(alphaFilter[i]);
+      G4SDManager::GetSDMpointer()->AddNewDetector(alfa_detector[i]);
+      alfa_detector[i]->RegisterPrimitive(primitiv1[i]);
+      SetSensitiveDetector("Al_detector_"+ std::to_string(i), alfa_detector[i]);
+  }
+
+
+    G4MultiFunctionalDetector* ion_detector = new G4MultiFunctionalDetector("ion_detector");
+    G4SDManager::GetSDMpointer()->AddNewDetector(ion_detector);
     G4VPrimitiveScorer* primitiv2 = new G4PSEnergyDeposit("edep");
     G4SDParticleFilter* ionFilter = new G4SDParticleFilter("ionFilter");
-    ionFilter->addIon(3,7); 
+    ionFilter->addIon(3,7);
     primitiv2->SetFilter(ionFilter);
-    cryst_2->RegisterPrimitive(primitiv2);
-    SetSensitiveDetector("Al_detector",cryst_2);
+    ion_detector->RegisterPrimitive(primitiv2);
+    for (int i = 1; i < numDetectors; i++) {    
+      SetSensitiveDetector("Al_detector_"+ std::to_string(i), ion_detector);
+    }
 
 }
