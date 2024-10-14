@@ -36,38 +36,33 @@ float max_bin = 5.;
 for(int i=0;i<numero_rivelatori/2;i++){
     TH1F *h_qlong_alfa = new TH1F (TString::Format("Eabs_alfa_%d",i),TString::Format("Eabs_alfa_%d",i),bin_number,0,max_bin);
     fill_histo(h_qlong_alfa,chain,TString::Format("Eabs_alfa_%d",i));
-
-    // TH1F *h_qlong_ion = new TH1F (TString::Format("Eabs_ions_%d",i),TString::Format("Eabs_ions_%d",i),bin_number,0,max_bin);
-    // fill_histo(h_qlong_ion,chain,TString::Format("Eabs_ions_%d",i));
-
     cnv_histo_0[i]  = new TCanvas(TString::Format("Eabs_det_%d",i),TString::Format("Eabs_det_%d",i));
-    // gPad-> SetLogy();
-    h_qlong_alfa->Draw("same histo");
-    // h_qlong_ion->SetLineColor(kRed);
-    // h_qlong_ion->Draw("same histo");
+    h_qlong_alfa->Draw();
     ev_alfa[i]=h_qlong_alfa->Integral();
-
 }
 
 for(int i=0;i<numero_rivelatori/2.;i++){
     // TH1F *h_qlong_alfa = new TH1F (TString::Format("Eabs_alfa_%d",i),TString::Format("Eabs_alfa_%d",i),bin_number,0,max_bin);
     // fill_histo(h_qlong_alfa,chain,TString::Format("Eabs_alfa_%d",i));
 
-    TH1F *h_qlong_ion = new TH1F (TString::Format("Eabs_ions_%d",i),TString::Format("Eabs_ions_%d",i),bin_number,0,max_bin);
+        TH1F *h_qlong_ion = new TH1F (TString::Format("Eabs_ions_%d",i),TString::Format("Eabs_ions_%d",i),bin_number,0,max_bin);
     fill_histo(h_qlong_ion,chain,TString::Format("Eabs_ions_%d",i));
 
-    cnv_histo_1[i]  = new TCanvas(TString::Format("Eabs_det2_%d",i),TString::Format("Eabs_det2_%d",i));
+    cnv_histo_0[i]  = new TCanvas(TString::Format("Eabs_det2_%d",i),TString::Format("Eabs_det2_%d",i));
     // gPad-> SetLogy();
-    // h_qlong_alfa->Draw("same histo");
     h_qlong_ion->SetLineColor(kRed);
     h_qlong_ion->Draw("same histo");
     ev_litio[i]=h_qlong_ion->Integral();
-
 }
 
+ofstream myfile;
+myfile.open ("build/efficenza",ios::app);
 for(int j=0;j<numero_rivelatori/2;j++){
     cout<<j<<"\t"<<ev_alfa[j]<<"\t"<<ev_litio[j]<<endl;
+    myfile<<j<<";"<<ev_alfa[j]<<";"<<ev_litio[j]<<endl;
 }
+
+myfile.close();
 
 return;
 }
@@ -130,19 +125,19 @@ void  fill_histo(TH1F* histo, TTree* br, const char* detector_name){
 */                  
 int root_analysis(){ 
 
-std::ifstream infile("efficenza");
+std::ifstream infile("build/efficenza");
 std::string temp;
 std::getline(infile, temp);
 bool insert_head_text = temp.empty();
 infile.close();
 ofstream myfile;
-myfile.open ("efficenza",ios::app);
+myfile.open ("build/efficenza",ios::app);
 if (insert_head_text){
-    myfile<<"spessore_mat_att;larghezza_alluminio;spessore_alluminio;N_alfa;N_litio;N_alfa_litio"<<endl;
+    myfile<<"id;alfa;litio"<<endl;
 }
 myfile.close();
 
-read_par_online_ana("/home/matteo/Dottorato/Geant4Simulation/Sim_Boro_carbide/build/histo_neut");
+read_par_online_ana("histo_neut");
 
 return 0;
 }

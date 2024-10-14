@@ -5,7 +5,7 @@ rm run_neutron.mac
 larghezza_alluminio=55
 
 for larghezza_alluminio in 1000; do
-    for spessore_mat_att in 5; do
+    for spessore_mat_att in 1; do
         for spessore_alluminio in 1000; do
                 rm run_neutron.mac
                 mezzo_pixel=$(echo "scale=3; $larghezza_alluminio / 2" | bc)
@@ -25,7 +25,7 @@ for larghezza_alluminio in 1000; do
                         /gps/energy 0.025 eV
                         /analysis/setFileName histo_neut.root
                         /run/printProgress 10000
-                        /run/beamOn 1000000" >> run_neutron.mac
+                        /run/beamOn 10000000" >> run_neutron.mac
 
                 echo $spessore_mat_att $larghezza_alluminio $spessore_alluminio > dimensioni_sensore
                 ./exampleB1 run_neutron.mac
