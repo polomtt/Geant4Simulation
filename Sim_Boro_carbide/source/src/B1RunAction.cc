@@ -121,8 +121,12 @@ void B1RunAction::BeginOfRunAction(const G4Run* run)
   
   for (int i = 0; i < N_detector; i++){
       analysisManager->CreateNtupleDColumn("Eabs_alfa_"+std::to_string(i));
-      analysisManager->CreateNtupleDColumn("Eabs_ions_"+std::to_string(i));
   }
+
+  for (int i = 0; i < N_detector; i++){
+  analysisManager->CreateNtupleDColumn("Eabs_ions_"+std::to_string(i));
+  }
+
 
   analysisManager->FinishNtuple();
 

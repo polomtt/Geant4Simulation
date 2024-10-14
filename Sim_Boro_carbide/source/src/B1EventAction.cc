@@ -68,18 +68,24 @@ void B1EventAction::BeginOfEventAction(const G4Event*)
 void B1EventAction::EndOfEventAction(const G4Event* event) 
 {   
 
-    // Ottieni l'istanza della classe B1DetectorConstruction
-    const B1DetectorConstruction* detectorConstruction = 
-    static_cast<const B1DetectorConstruction*>(G4RunManager::GetRunManager()->GetUserDetectorConstruction());
-    // Accedi al membro non statico numDetectors
-    int N_detector = detectorConstruction->numDetectors;
-
+  // Ottieni l'istanza della classe B1DetectorConstruction
+  const B1DetectorConstruction* detectorConstruction = 
+  static_cast<const B1DetectorConstruction*>(G4RunManager::GetRunManager()->GetUserDetectorConstruction());
+  // Accedi al membro non statico numDetectors
+  int N_detector = detectorConstruction->numDetectors;
 
   // Get analysis manager 
   G4AnalysisManager* analysisManager = G4AnalysisManager::Instance(); 
-    
+  
   G4HCofThisEvent* HCE = event->GetHCofThisEvent();
   if(!HCE) return;
+
+  //        _      _            _       _           
+  //   __| | ___| |_     __ _| |_ __ | |__   __ _ 
+  //  / _` |/ _ \ __|   / _` | | '_ \| '_ \ / _` |
+  // | (_| |  __/ |_   | (_| | | |_) | | | | (_| |
+  //  \__,_|\___|\__|___\__,_|_| .__/|_| |_|\__,_|
+  //               |_____|     |_|                
 
   for(int det = 0;det<N_detector;det++) { 
   // Get hits collections IDs
@@ -95,33 +101,36 @@ void B1EventAction::EndOfEventAction(const G4Event* event)
   for (itr = evtMap->GetMap()->begin(); itr != evtMap->GetMap()->end(); itr++) {
             edep_cry_1 = *(itr->second);
   } 
-
   analysisManager->FillNtupleDColumn(det,edep_cry_1);
   fCollID_cryst=-1;
   }
   
+  //        _      _       _             
+  //   __| | ___| |_    (_) ___  _ __  
+  //  / _` |/ _ \ __|   | |/ _ \| '_ \ 
+  // | (_| |  __/ |_    | | (_) | | | |
+  //  \__,_|\___|\__|___|_|\___/|_| |_|
+  //               |_____|           
 
+  for(int det = 0;det<N_detector;det++) { 
+  // Get hits collections IDs
+  if (fCollID_cryst2 < 0) {
+    G4SDManager* SDMan = G4SDManager::GetSDMpointer();  
+    fCollID_cryst2   = SDMan->GetCollectionID("ion_detector_" + std::to_string(det)+"/edep");  
+  }
   
+  // //Energy in crystals_1
+  G4double edep_cry_2=0;
+  G4THitsMap<G4double>* evtMap2 = (G4THitsMap<G4double>*)(HCE->GetHC(fCollID_cryst2));       
+  std::map<G4int,G4double*>::iterator itr;
+  for (itr = evtMap2->GetMap()->begin(); itr != evtMap2->GetMap()->end(); itr++) {
+            edep_cry_2 = *(itr->second);
+  } 
+  analysisManager->FillNtupleDColumn(det+N_detector,edep_cry_2);
+  fCollID_cryst2=-1;
+  }
 
-  // if (fCollID_cryst2 < 0) {
-  //   G4SDManager* SDMan = G4SDManager::GetSDMpointer();  
-  //   fCollID_cryst2   = SDMan->GetCollectionID("ion_detector/edep");
-  // }
-
-  // //Energy in crystals_2
-  // G4double edep_cry_2=0;
-  // G4THitsMap<G4double>* evtMap2 = (G4THitsMap<G4double>*)(HCE->GetHC(fCollID_cryst2));       
-  // std::map<G4int,G4double*>::iterator itr2;
-  // for (itr2 = evtMap2->GetMap()->begin(); itr2 != evtMap2->GetMap()->end(); itr2++) {
-  //   edep_cry_2 = *(itr2->second);
-  //   // analysisManager->FillNtupleDColumn(1,edep);
-  // }  
-
-
-  
-  // analysisManager->FillNtupleDColumn(1,edep_cry_2);
   analysisManager->AddNtupleRow();
-
 
 }
 

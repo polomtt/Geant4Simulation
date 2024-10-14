@@ -70,7 +70,7 @@ B1DetectorConstruction::B1DetectorConstruction()
 : G4VUserDetectorConstruction(),
   fScoringVolume(0)
 { 
-  numDetectors = 5;
+  numDetectors = 10;
 }
 
 
@@ -200,34 +200,48 @@ void B1DetectorConstruction::ConstructSDandField()
 {
   G4SDManager::GetSDMpointer()->SetVerboseLevel(1);
 
-      
+  //        _       _           
+  //   __ _| |_ __ | |__   __ _ 
+  //  / _` | | '_ \| '_ \ / _` |
+  // | (_| | | |_) | | | | (_| |
+  //  \__,_|_| .__/|_| |_|\__,_|
+  //         |_|                
+
   G4MultiFunctionalDetector* alfa_detector[numDetectors];
-  G4VPrimitiveScorer* primitiv1[numDetectors]; 
-  G4SDParticleFilter* alphaFilter[numDetectors]; = new G4SDParticleFilter("alphaFilter");
-  // alphaFilter->add("alpha");
-  // primitiv1->SetFilter(alphaFilter);
+  G4VPrimitiveScorer* primitiv_alfa[numDetectors]; 
+  G4SDParticleFilter* alphaFilter[numDetectors]; 
 
   for (int i = 0; i < numDetectors; ++i) {
-      primitiv1[i]= new G4PSEnergyDeposit("edep");
+      primitiv_alfa[i]= new G4PSEnergyDeposit("edep");
       alfa_detector[i] = new G4MultiFunctionalDetector("alfa_detector_" + std::to_string(i));
-      alphaFilter[i]; = new G4SDParticleFilter("alphaFilter");
+      alphaFilter[i] = new G4SDParticleFilter("alphaFilter");
       alphaFilter[i]->add("alpha");
-      primitiv1[i]->SetFilter(alphaFilter[i]);
+      primitiv_alfa[i]->SetFilter(alphaFilter[i]);
       G4SDManager::GetSDMpointer()->AddNewDetector(alfa_detector[i]);
-      alfa_detector[i]->RegisterPrimitive(primitiv1[i]);
+      alfa_detector[i]->RegisterPrimitive(primitiv_alfa[i]);
       SetSensitiveDetector("Al_detector_"+ std::to_string(i), alfa_detector[i]);
   }
 
+  //    _ _ _   _         _____ 
+  // | (_) |_(_) ___   |___  |
+  // | | | __| |/ _ \     / / 
+  // | | | |_| | (_) |   / /  
+  // |_|_|\__|_|\___/___/_/   
+  //               |_____|    
 
-    G4MultiFunctionalDetector* ion_detector = new G4MultiFunctionalDetector("ion_detector");
-    G4SDManager::GetSDMpointer()->AddNewDetector(ion_detector);
-    G4VPrimitiveScorer* primitiv2 = new G4PSEnergyDeposit("edep");
-    G4SDParticleFilter* ionFilter = new G4SDParticleFilter("ionFilter");
-    ionFilter->addIon(3,7);
-    primitiv2->SetFilter(ionFilter);
-    ion_detector->RegisterPrimitive(primitiv2);
-    for (int i = 1; i < numDetectors; i++) {    
-      SetSensitiveDetector("Al_detector_"+ std::to_string(i), ion_detector);
-    }
+  G4MultiFunctionalDetector* ion_detector[numDetectors];
+  G4VPrimitiveScorer* primitiv_ion[numDetectors]; 
+  G4SDParticleFilter* ionFilter[numDetectors]; 
+
+  for (int i = 0; i < numDetectors; ++i) {
+      primitiv_ion[i]= new G4PSEnergyDeposit("edep");
+      ion_detector[i] = new G4MultiFunctionalDetector("ion_detector_" + std::to_string(i));
+      ionFilter[i] = new G4SDParticleFilter("ionFilter");
+      ionFilter[i] ->addIon(3,7);
+      primitiv_ion[i]->SetFilter(ionFilter[i]);
+      G4SDManager::GetSDMpointer()->AddNewDetector(ion_detector[i]);
+      ion_detector[i]->RegisterPrimitive(primitiv_ion[i]);
+      SetSensitiveDetector("Al_detector_"+ std::to_string(i), ion_detector[i]);
+  }
 
 }

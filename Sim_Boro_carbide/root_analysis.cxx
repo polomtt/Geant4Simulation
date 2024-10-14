@@ -20,59 +20,54 @@ for(int i=0;i<8;i++){
 
 TTree *tree0   = (TTree*)chain->GetTree();
 
-int numero_rivelatori = chain->GetNbranches()/2;
+int numero_rivelatori = chain->GetNbranches();
 
 TCanvas* cnv_histo_0[numero_rivelatori];
+TCanvas* cnv_histo_1[numero_rivelatori];
 
-// int nBranches = tree0->GetEntries();  // Ottieni il numero di branch
-// std::cout << "Numero di branch nel TTree: " << nBranches << std::endl;
+float ev_alfa[numero_rivelatori];
+float ev_litio[numero_rivelatori];
+
+int nBranches = chain->GetNbranches();  // Ottieni il numero di branch
+std::cout << "Numero di branch nel TTree: " << nBranches << std::endl;
 
 float bin_number = 500;
 float max_bin = 5.;
-for(int i=0;i<numero_rivelatori;i++){
-    TH1F *h_qlong_ch1 = new TH1F (TString::Format("Eabs_alfa_%d",i),TString::Format("Eabs_alfa_%d",i),bin_number,0,max_bin);
-    fill_histo(h_qlong_ch1,chain,TString::Format("Eabs_alfa_%d",i));
+for(int i=0;i<numero_rivelatori/2;i++){
+    TH1F *h_qlong_alfa = new TH1F (TString::Format("Eabs_alfa_%d",i),TString::Format("Eabs_alfa_%d",i),bin_number,0,max_bin);
+    fill_histo(h_qlong_alfa,chain,TString::Format("Eabs_alfa_%d",i));
 
-    // TH1F *h_qlong_ch2 = new TH1F (file_ch0,file_ch0,bin_number,0,max_bin);
-    // fill_histo(h_qlong_ch2,chain,"Eabs_cry_2");
-    // h_qlong_ch2->SetLineColor(2);
+    // TH1F *h_qlong_ion = new TH1F (TString::Format("Eabs_ions_%d",i),TString::Format("Eabs_ions_%d",i),bin_number,0,max_bin);
+    // fill_histo(h_qlong_ion,chain,TString::Format("Eabs_ions_%d",i));
 
-    // int N_alfa=0;
-    // int N_litio=0;
-    // int N_alfa_litio=0;
-
-    // Eabs_ions_4 Eabs_alfa_4
-    // print_eventi_simultanei(chain,"Eabs_cry_1","Eabs_cry_2",N_alfa,N_litio,N_alfa_litio);
-
-    cnv_histo_0[i]  = new TCanvas(TString::Format("Eabs_alfa_%d",i),TString::Format("Eabs_alfa_%d",i));
+    cnv_histo_0[i]  = new TCanvas(TString::Format("Eabs_det_%d",i),TString::Format("Eabs_det_%d",i));
     // gPad-> SetLogy();
-    h_qlong_ch1->Draw("same histo");
+    h_qlong_alfa->Draw("same histo");
+    // h_qlong_ion->SetLineColor(kRed);
+    // h_qlong_ion->Draw("same histo");
+    ev_alfa[i]=h_qlong_alfa->Integral();
+
 }
-// h_qlong_ch2->Draw("same histo");
 
-// float spessore_mat_att;
-// float larghezza_alluminio;
-// float spessore_alluminio; 
+for(int i=0;i<numero_rivelatori/2.;i++){
+    // TH1F *h_qlong_alfa = new TH1F (TString::Format("Eabs_alfa_%d",i),TString::Format("Eabs_alfa_%d",i),bin_number,0,max_bin);
+    // fill_histo(h_qlong_alfa,chain,TString::Format("Eabs_alfa_%d",i));
 
-// std::ifstream in_myfile;
-// in_myfile.open("dimensioni_sensore");
-// in_myfile>>spessore_mat_att;
-// in_myfile>>larghezza_alluminio;
-// in_myfile>>spessore_alluminio;
-// in_myfile.close();
+    TH1F *h_qlong_ion = new TH1F (TString::Format("Eabs_ions_%d",i),TString::Format("Eabs_ions_%d",i),bin_number,0,max_bin);
+    fill_histo(h_qlong_ion,chain,TString::Format("Eabs_ions_%d",i));
 
-// ofstream myfile;
-// myfile.open ("efficenza",ios::app);
-// myfile <<spessore_mat_att<<";"<<larghezza_alluminio<<";"<<spessore_alluminio<<";"<<N_alfa<<";"<<N_litio<<";"<<N_alfa_litio<<endl;
-// myfile.close();
+    cnv_histo_1[i]  = new TCanvas(TString::Format("Eabs_det2_%d",i),TString::Format("Eabs_det2_%d",i));
+    // gPad-> SetLogy();
+    // h_qlong_alfa->Draw("same histo");
+    h_qlong_ion->SetLineColor(kRed);
+    h_qlong_ion->Draw("same histo");
+    ev_litio[i]=h_qlong_ion->Integral();
 
+}
 
-
-// cout<<"_*_*_*_*_*_*_*_*_*_*_*_*_*_*_"<<endl;                   
-// cout<<"Alfa: "<<N_alfa<<endl;
-// cout<<"Li7: "<<N_litio<<endl;
-// cout<<"Coincidenza: "<<N_alfa_litio<<endl;
-// cout<<"_*_*_*_*_*_*_*_*_*_*_*_*_*_*_"<<endl;
+for(int j=0;j<numero_rivelatori/2;j++){
+    cout<<j<<"\t"<<ev_alfa[j]<<"\t"<<ev_litio[j]<<endl;
+}
 
 return;
 }
@@ -121,7 +116,7 @@ void  fill_histo(TH1F* histo, TTree* br, const char* detector_name){
 
     for(int i=0;i<num_ev;i++){
     br->GetEntry(i);
-    if(ev>0.1)
+    if(ev>0.001)
         histo->Fill(ev);
     }
     return;
@@ -147,7 +142,7 @@ if (insert_head_text){
 }
 myfile.close();
 
-read_par_online_ana("build/histo_neut");
+read_par_online_ana("/home/matteo/Dottorato/Geant4Simulation/Sim_Boro_carbide/build/histo_neut");
 
 return 0;
 }
