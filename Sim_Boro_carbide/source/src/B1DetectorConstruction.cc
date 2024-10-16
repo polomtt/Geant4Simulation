@@ -114,7 +114,7 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
 
   double larghezza_Al     = -1e-6 * m * 0.5;
   double spessore_Al      = 1e-6 * m * 0.5;
-  double free_space       = 1e-9 * m;
+  double free_space       = 10e-9 * m;
   double spessore_mat_att  = 1e-6 * m *0.5;
 
   // echo $spessore_mat_att $larghezza_alluminio $spessore_alluminio > dimensioni_sensore
@@ -180,7 +180,7 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
   // act_Mat = nist->FindOrBuildMaterial("G4_Galactic");
 
   G4LogicalVolume* active_material_sup_array[numDetectors];
-  float pos_z_layer_B = spessore_mat_att+free_space;
+  float pos_z_layer_B = spessore_mat_att + free_space;
   G4VisAttributes* Color_B4C = new G4VisAttributes(G4Colour::Red());
 
   for (int i = 0; i < numDetectors; ++i) {
