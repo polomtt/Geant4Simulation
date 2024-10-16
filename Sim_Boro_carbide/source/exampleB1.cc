@@ -64,7 +64,7 @@ int main(int argc,char** argv)
   //
   auto* runManager =
     G4RunManagerFactory::CreateRunManager(G4RunManagerType::Default);
-  runManager->SetNumberOfThreads(8);  //PER LANCIARE IN PARALLELO DECOMMENTARE
+  runManager->SetNumberOfThreads(4);  //PER LANCIARE IN PARALLELO DECOMMENTARE
   // Set mandatory initialization classes
   //
   // Detector construction

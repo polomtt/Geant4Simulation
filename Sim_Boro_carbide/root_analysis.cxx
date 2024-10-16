@@ -45,7 +45,7 @@ for(int i=0;i<numero_rivelatori/2.;i++){
     // TH1F *h_qlong_alfa = new TH1F (TString::Format("Eabs_alfa_%d",i),TString::Format("Eabs_alfa_%d",i),bin_number,0,max_bin);
     // fill_histo(h_qlong_alfa,chain,TString::Format("Eabs_alfa_%d",i));
 
-        TH1F *h_qlong_ion = new TH1F (TString::Format("Eabs_ions_%d",i),TString::Format("Eabs_ions_%d",i),bin_number,0,max_bin);
+    TH1F *h_qlong_ion = new TH1F (TString::Format("Eabs_ions_%d",i),TString::Format("Eabs_ions_%d",i),bin_number,0,max_bin);
     fill_histo(h_qlong_ion,chain,TString::Format("Eabs_ions_%d",i));
 
     cnv_histo_0[i]  = new TCanvas(TString::Format("Eabs_det2_%d",i),TString::Format("Eabs_det2_%d",i));
@@ -56,7 +56,7 @@ for(int i=0;i<numero_rivelatori/2.;i++){
 }
 
 ofstream myfile;
-myfile.open ("build/efficenza",ios::app);
+myfile.open ("efficenza",ios::app);
 for(int j=0;j<numero_rivelatori/2;j++){
     cout<<j<<"\t"<<ev_alfa[j]<<"\t"<<ev_litio[j]<<endl;
     myfile<<j<<";"<<ev_alfa[j]<<";"<<ev_litio[j]<<endl;
@@ -125,13 +125,13 @@ void  fill_histo(TH1F* histo, TTree* br, const char* detector_name){
 */                  
 int root_analysis(){ 
 
-std::ifstream infile("build/efficenza");
+std::ifstream infile("efficenza");
 std::string temp;
 std::getline(infile, temp);
 bool insert_head_text = temp.empty();
 infile.close();
 ofstream myfile;
-myfile.open ("build/efficenza",ios::app);
+myfile.open ("efficenza",ios::app);
 if (insert_head_text){
     myfile<<"id;alfa;litio"<<endl;
 }
