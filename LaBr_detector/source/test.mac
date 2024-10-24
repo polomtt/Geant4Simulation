@@ -1,0 +1,42 @@
+# full-energy peak efficiency LaBr 2", In activation analysis
+#
+/control/verbose 1
+/run/verbose 1
+/tracking/verbose 0
+#
+/run/printProgress 10000
+#
+# Initialize kernel
+/run/initialize
+#
+/analysis/verbose 1
+/analysis/setFileName output_846keV
+#
+/gps/particle gamma
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+#
+# Indio
+#/gps/pos/radius 5.0 mm
+#/gps/pos/centre 0. 0. 0.2565 mm
+#/gps/pos/halfz 0.2565 mm
+#
+# ORO and MnCu
+/gps/pos/radius 6.35 mm
+/gps/pos/centre 0. 0. 0.0254 mm
+/gps/pos/halfz 0.0254 mm
+#
+#/gps/energy 138.29 keV
+#/gps/energy 416.9 keV
+#/gps/energy 1097.28 keV
+#/gps/energy 1293.56 keV
+#
+# linea del Au-198
+#/gps/energy 411.8 keV
+#
+# linea del Mn-56
+/gps/energy 846.8 keV
+#
+/gps/ang/type iso
+#
+/run/beamOn 1000000

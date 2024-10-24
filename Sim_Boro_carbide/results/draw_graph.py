@@ -14,10 +14,6 @@ def draw_histo(filename,i,x_col,y_col):
     
     
     ev = 10000000
-    label_name = "Xeon"
-    
-    if filename.find("i7")>-1:
-     label_name= "i7"
     
     for a,b in zip(df["alfa"],df["litio"]):
         y_to_plot.append((a+b)/ev)
@@ -27,19 +23,13 @@ def draw_histo(filename,i,x_col,y_col):
     line_wif = 3
     
     norm = 1.0
-    
-    if i==1:
-        norm = 0.0281622
-    if i==2:
-        norm = 0.0033615
-
-    
-    plt.plot(df[x_col],y_to_plot/np.mean(norm),label=label_name,ls=line_stype,lw=line_wif)
-    plt.ylabel("Eff [-]",fontsize=13)
-    plt.xlabel("Numero layer [-]",fontsize=13)
+        
+    plt.plot(df[x_col],y_to_plot/np.mean(norm),label=filename,ls=line_stype,lw=line_wif)
+    plt.ylabel("Neutron capture efficiency [-]",fontsize=13)
+    plt.xlabel("Number of layer [-]",fontsize=13)
     plt.grid()
     plt.xticks()
-    plt.legend()
+    plt.legend(fontsize=15)
     
     print(np.max(y_to_plot))
 
