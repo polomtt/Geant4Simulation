@@ -70,7 +70,7 @@ B1DetectorConstruction::B1DetectorConstruction()
 : G4VUserDetectorConstruction(),
   fScoringVolume(0)
 { 
-  numDetectors = 10;
+  numDetectors = 1;
 }
 
 
