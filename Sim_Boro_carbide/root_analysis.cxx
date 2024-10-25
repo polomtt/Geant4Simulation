@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 void fill_histo(TH1F* histo, TTree* br, const char* detector_name);
-void print_eventi_simultanei(TTree* br, const char* detector_name1, const char* detector_name2, int & N_alfa, int & N_litio,int & N_alfa_litio);
+void print_eventi_simultanei(TTree* br, const char* detector_name1, const char* detector_name2);
 
 //                     _ 
 //  _ __ ___  __ _  __| |
@@ -42,11 +42,10 @@ for(int i=0;i<numero_rivelatori/2;i++){
     cnv_histo_0[i]  = new TCanvas(TString::Format("Eabs_det_%d",i),TString::Format("Eabs_det_%d",i));
     h_qlong_alfa->Draw();
     ev_alfa[i]=h_qlong_alfa->Integral();
+    cnv_histo_0[i]->SaveAs(TString::Format("layer_%d_alfa.png",i+1));
 }
 
 for(int i=0;i<numero_rivelatori/2.;i++){
-    // TH1F *h_qlong_alfa = new TH1F (TString::Format("Eabs_alfa_%d",i),TString::Format("Eabs_alfa_%d",i),bin_number,0,max_bin);
-    // fill_histo(h_qlong_alfa,chain,TString::Format("Eabs_alfa_%d",i));
 
     TH1F *h_qlong_ion = new TH1F (TString::Format("Eabs_ions_%d",i),TString::Format("Eabs_ions_%d",i),bin_number,0,max_bin);
     fill_histo(h_qlong_ion,chain,TString::Format("Eabs_ions_%d",i));
@@ -56,6 +55,7 @@ for(int i=0;i<numero_rivelatori/2.;i++){
     h_qlong_ion->SetLineColor(kRed);
     h_qlong_ion->Draw("same histo");
     ev_litio[i]=h_qlong_ion->Integral();
+    cnv_histo_0[i]->SaveAs(TString::Format("layer_%d_litio.png",i+1));
 }
 
 ofstream myfile;
@@ -66,6 +66,8 @@ for(int j=0;j<numero_rivelatori/2;j++){
 }
 
 myfile.close();
+cout<<"________"<<endl;
+print_eventi_simultanei(chain,"Eabs_alfa_0","Eabs_ions_0");
 
 return;
 }
@@ -77,9 +79,14 @@ return;
 // | .__/|_|  |_|_| |_|\__|
 // |_|                     
 
-void print_eventi_simultanei(TTree* br, const char* detector_name1, const char* detector_name2,int & N_alfa, int & N_litio,int & N_alfa_litio){
+void print_eventi_simultanei(TTree* br, const char* detector_name1, const char* detector_name2){
     double ev1;
     double ev2;
+
+    int N_alfa       =0;
+    int N_litio      =0;
+    int N_alfa_litio =0;
+
     br->SetBranchAddress(detector_name1,&ev1);
     br->SetBranchAddress(detector_name2,&ev2);
     int num_ev=br->GetEntries();
@@ -88,7 +95,7 @@ void print_eventi_simultanei(TTree* br, const char* detector_name1, const char* 
 
     for(int i=0;i<num_ev;i++){
         br->GetEntry(i);
-        if(ev1>0.1)
+        if(ev1>0)
             N_alfa++;
         if(ev2>0)
             N_litio++;
@@ -96,6 +103,7 @@ void print_eventi_simultanei(TTree* br, const char* detector_name1, const char* 
             N_alfa_litio++;
     }
     
+    cout<<N_alfa<<" "<<N_litio<<" "<<N_alfa_litio<<endl;
 }
 
 /*   __ _ _ _     _     _     _        

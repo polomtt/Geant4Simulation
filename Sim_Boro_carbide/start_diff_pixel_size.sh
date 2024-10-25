@@ -31,7 +31,7 @@ for larghezza_alluminio in 1000; do
                 ./exampleB1 run_neutron.mac
                 root  -l -q ../root_analysis.cxx
 
-                python3 ../results/draw_graph.py efficenza
+                python3 ../draw_graph.py efficenza
         done;        
     done;
 done;
