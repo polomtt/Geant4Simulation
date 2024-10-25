@@ -42,10 +42,11 @@
 
 #include "B1RunAction.hh"
 
-#include "QGSP_BERT_HP.hh"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+// #include "QGSP_BERT_HP.hh"
 
+// #include "QGSP_BIC_HP.hh"
+#include "FTFP_BERT_HP.hh"
 int main(int argc,char** argv)
 {
 
@@ -70,8 +71,10 @@ int main(int argc,char** argv)
   // Detector construction
   runManager->SetUserInitialization(new B1DetectorConstruction());
 
-   // Physics list
-  G4VModularPhysicsList* physicsList = new QGSP_BERT_HP;
+  // Physics list
+  // G4VModularPhysicsList* physicsList = new QGSP_BERT_HP;
+  // G4VModularPhysicsList* physicsList = new QGSP_BIC_HP;
+  G4VModularPhysicsList* physicsList = new FTFP_BERT_HP;
   physicsList->SetVerboseLevel(1);
   runManager->SetUserInitialization(physicsList);
 

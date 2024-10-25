@@ -12,11 +12,15 @@ def draw_histo(filename,i,x_col,y_col):
 
     y_to_plot = []
     
+    n_Ev=1
     
-    ev = 10000000
+    try:
+        n_Ev=np.mean(df["ev_sim"])
+    except:
+        pass
     
     for a,b in zip(df["alfa"],df["litio"]):
-        y_to_plot.append((a+b)/ev)
+        y_to_plot.append((a+b)/n_Ev)
     
     line_stype="-"
 
@@ -26,10 +30,10 @@ def draw_histo(filename,i,x_col,y_col):
         
     plt.plot(df[x_col],y_to_plot/np.mean(norm),label=filename,ls=line_stype,lw=line_wif)
     plt.ylabel("Neutron capture efficiency [-]",fontsize=13)
-    plt.xlabel("Number of layer [-]",fontsize=13)
+    plt.xlabel("Number of layer [-]",fontsize=11)
     plt.grid()
     plt.xticks()
-    plt.legend(fontsize=15)
+    plt.legend(fontsize=11)
     
     print(np.max(y_to_plot))
 

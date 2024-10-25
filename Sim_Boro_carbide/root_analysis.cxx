@@ -29,7 +29,10 @@ float ev_alfa[numero_rivelatori];
 float ev_litio[numero_rivelatori];
 
 int nBranches = chain->GetNbranches();  // Ottieni il numero di branch
+int nEntries =  chain->GetEntries();
+
 std::cout << "Numero di branch nel TTree: " << nBranches << std::endl;
+std::cout << "Numero di ev nel TTree: " << nEntries << std::endl;
 
 float bin_number = 500;
 float max_bin = 5.;
@@ -58,8 +61,8 @@ for(int i=0;i<numero_rivelatori/2.;i++){
 ofstream myfile;
 myfile.open ("efficenza",ios::app);
 for(int j=0;j<numero_rivelatori/2;j++){
-    cout<<j<<"\t"<<ev_alfa[j]<<"\t"<<ev_litio[j]<<endl;
-    myfile<<j<<";"<<ev_alfa[j]<<";"<<ev_litio[j]<<endl;
+    myfile<<j<<";"<<ev_alfa[j]<<";"<<ev_litio[j]<<";"<<nEntries<<endl;
+    cout<<j<<";"<<ev_alfa[j]<<";"<<ev_litio[j]<<";"<<nEntries<<endl;
 }
 
 myfile.close();
@@ -133,7 +136,7 @@ infile.close();
 ofstream myfile;
 myfile.open ("efficenza",ios::app);
 if (insert_head_text){
-    myfile<<"id;alfa;litio"<<endl;
+    myfile<<"id;alfa;litio;ev_sim"<<endl;
 }
 myfile.close();
 

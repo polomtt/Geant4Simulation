@@ -25,11 +25,13 @@ for larghezza_alluminio in 1000; do
                         /gps/energy 0.025 eV
                         /analysis/setFileName histo_neut.root
                         /run/printProgress 10000
-                        /run/beamOn 10000000" >> run_neutron.mac
+                        /run/beamOn 1000000" >> run_neutron.mac
 
                 echo $spessore_mat_att $larghezza_alluminio $spessore_alluminio > dimensioni_sensore
                 ./exampleB1 run_neutron.mac
-                root  ../root_analysis.cxx
+                root  -l -q ../root_analysis.cxx
+
+                python3 ../results/draw_graph.py efficenza
         done;        
     done;
 done;

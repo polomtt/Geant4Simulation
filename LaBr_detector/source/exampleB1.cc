@@ -44,10 +44,11 @@
 
 #include "Randomize.hh"
 
-#include "B1PhysicsList.hh"
+// #include "B1PhysicsList.hh"
 
 #include "G4ScoringManager.hh"
 
+#include "QGSP_BERT_HP.hh"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 int main(int argc,char** argv)
@@ -84,11 +85,16 @@ int main(int argc,char** argv)
   runManager->SetUserInitialization(new B1DetectorConstruction());
 
   // physics
-	runManager->SetUserInitialization(new B1PhysicsList());
+	// runManager->SetUserInitialization(new B1PhysicsList());
+  G4VModularPhysicsList* physicsList = new QGSP_BERT_HP;
+  physicsList->SetVerboseLevel(1);
+  runManager->SetUserInitialization(physicsList);
     
   // User action initialization
   runManager->SetUserInitialization(new B1ActionInitialization());
   
+  
+
   // Initialize visualization
   //
   G4VisManager* visManager = new G4VisExecutive;

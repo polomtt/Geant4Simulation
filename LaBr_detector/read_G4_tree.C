@@ -1,4 +1,4 @@
-void read_G4_tree(const char *name_file, int flag_save = 0, const char *output_file = "output.dat")
+void read_G4_tree(const char *name_file, const char *file_out, int flag_save = 0, const char *output_file = "output.dat")
 {
     int numBins = 1000;
     double minX = 0, maxX = 1.5;
@@ -57,5 +57,10 @@ void read_G4_tree(const char *name_file, int flag_save = 0, const char *output_f
         
         myfile.close();
     }
+    c0->SaveAs(file_out);
+}
 
+void start(){
+    read_G4_tree("build/histo_t0.root","fig_t0.root");
+    read_G4_tree("build/histo_t1.root","fig_t1.root");
 }
