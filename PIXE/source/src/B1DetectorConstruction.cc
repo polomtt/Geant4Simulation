@@ -101,11 +101,22 @@ G4Tubs* foglio_kapton = new G4Tubs("kapton_disk",0,1*cm,7*0.5*um,0*deg,360*deg);
 G4Material* foglio_kapton_mat = nist->FindOrBuildMaterial("G4_KAPTON");
 // G4Material* foglio_kapton_mat = nist->FindOrBuildMaterial("G4_AIR");
 G4LogicalVolume* foglio_kapton_log = new G4LogicalVolume(foglio_kapton,foglio_kapton_mat,"Logic_kapton");
-G4VisAttributes* Color_Pipe = new G4VisAttributes(G4Colour::Yellow());
+G4VisAttributes* Color_Pipe = new G4VisAttributes(G4Colour::Red());
 foglio_kapton_log->SetVisAttributes(Color_Pipe);
 G4RotationMatrix* rotationMatrix_kpt = new G4RotationMatrix();
 rotationMatrix_kpt->rotateZ(90.*deg);
 new G4PVPlacement(rotationMatrix_tubo,G4ThreeVector(0,0,3.5*um),foglio_kapton_log,"Logic_beam_pipe",logicWorld,false,0,checkOverlaps);
+
+/***************************/
+// Foglio oro
+/***************************/
+
+G4Box* gold_foil = new G4Box("gold_foil",5.*cm,5.*cm,25*um);
+G4Material* gold_foil_mat = nist->FindOrBuildMaterial("G4_Au");
+G4LogicalVolume* gold_foil_log = new G4LogicalVolume(gold_foil,gold_foil_mat,"Logic_gold");
+G4VisAttributes* Color_gold = new G4VisAttributes(G4Colour::Yellow());
+gold_foil_log->SetVisAttributes(Color_gold);
+new G4PVPlacement(0,G4ThreeVector(0,0,5*cm),gold_foil_log,"Logic_beam_gold",logicWorld,false,0,checkOverlaps);
 
 /***************************/
 // Detector

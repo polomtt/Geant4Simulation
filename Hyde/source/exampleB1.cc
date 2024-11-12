@@ -42,7 +42,9 @@
 
 #include "B1RunAction.hh"
 
-#include "QGSP_BERT_HP.hh"
+// #include "QGSP_BERT_HP.hh"
+
+#include "QGSP_BIC_HP.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -71,8 +73,9 @@ int main(int argc,char** argv)
   runManager->SetUserInitialization(new B1DetectorConstruction());
 
    // Physics list
-  G4VModularPhysicsList* physicsList = new QGSP_BERT_HP;
-  physicsList->SetVerboseLevel(1);
+  // G4VModularPhysicsList* physicsList = new QGSP_BERT_HP;
+  G4VModularPhysicsList* physicsList = new QGSP_BIC_HP;
+  physicsList->SetVerboseLevel(0);
   runManager->SetUserInitialization(physicsList);
 
 

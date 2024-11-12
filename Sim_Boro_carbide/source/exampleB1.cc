@@ -44,9 +44,10 @@
 
 
 // #include "QGSP_BERT_HP.hh"
-
 #include "QGSP_BIC_HP.hh"
 // #include "FTFP_BERT_HP.hh"
+
+
 int main(int argc,char** argv)
 {
 
@@ -57,15 +58,12 @@ int main(int argc,char** argv)
   if ( argc == 1 ) {
     ui = new G4UIExecutive(argc, argv);
   }
-
-  // Optionally: choose a different Random engine...
-  // G4Random::setTheEngine(new CLHEP::MTwistEngine);
-  
+ 
   // Construct the default run manager
   //
   auto* runManager =
     G4RunManagerFactory::CreateRunManager(G4RunManagerType::Default);
-  runManager->SetNumberOfThreads(4);  //PER LANCIARE IN PARALLELO DECOMMENTARE
+  runManager->SetNumberOfThreads(1);  //PER LANCIARE IN PARALLELO DECOMMENTARE
   // Set mandatory initialization classes
   //
   // Detector construction

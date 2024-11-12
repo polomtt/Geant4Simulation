@@ -41,14 +41,20 @@ h_qlong_ch0->SetStats(0);
 h_qlong_ch0->GetXaxis()->SetTitle("Energy [MeV]");
 h_qlong_ch0->GetYaxis()->SetTitle("Counts [-]");
 
-h_qlong_ch0->GetXaxis()->SetLabelSize(0.05);
-h_qlong_ch0->GetYaxis()->SetLabelSize(0.05);
+h_qlong_ch0->GetXaxis()->SetLabelSize(0.04);
+h_qlong_ch0->GetYaxis()->SetLabelSize(0.04);
 
-h_qlong_ch0->GetXaxis()->SetTitleSize(0.06);
-h_qlong_ch0->GetYaxis()->SetTitleSize(0.06);
+h_qlong_ch0->GetXaxis()->CenterTitle();
+h_qlong_ch0->GetYaxis()->CenterTitle();
 
-legend->AddEntry(h_qlong_ch0,TString::Format("#splitline{%s}{Eff %.1f %s}",str_leg,100.*(det_ev/tot_ev),"\u0025"),"f");
-legend->SetTextSize(0.05);  
+h_qlong_ch0->GetXaxis()->SetTitleSize(0.05);
+h_qlong_ch0->GetYaxis()->SetTitleSize(0.05);
+
+h_qlong_ch0->GetXaxis()->SetRangeUser(0,4);
+
+// legend->AddEntry(h_qlong_ch0,TString::Format("#splitline{%s}{Eff %.1f %s}",str_leg,100.*(det_ev/tot_ev),"\u0025"),"f");
+legend->AddEntry(h_qlong_ch0,TString::Format("%s",str_leg),"l");
+legend->SetTextSize(0.04);  
 
 gPad->SetLeftMargin(0.13);    // Imposta la larghezza del margine sinistro
 gPad->SetRightMargin(0.05);   // Imposta la larghezza del margine destro
@@ -86,11 +92,11 @@ return 0;
 int root_analysis(){ 
 TCanvas* cnv = new TCanvas();
 
-TLegend* legend = new TLegend(0.55,0.6,0.95,0.90);
+TLegend* legend = new TLegend(0.65,0.7,0.94,0.89);
 
 read_par_online_ana("buco_pieno/histo_neut",legend,"Full cavity",9);
 read_par_online_ana("buco_semivuoto/histo_neut",legend,"500nm deposition",46);
-
+legend->SetLineColor(kWhite);
 legend->Draw("same");
 cnv->SaveAs("fig.png");
 cnv->SaveAs("fig.pdf");
