@@ -87,7 +87,7 @@ G4VPhysicalVolume* physWorld = new G4PVPlacement(0,G4ThreeVector(),logicWorld,"W
 G4Box* solid_Au = new G4Box("Envelope",1.*mm,1.*mm,0.1*um);
 G4Material* gold_material = nist->FindOrBuildMaterial("G4_Au");
 G4LogicalVolume* Logic_Au = new G4LogicalVolume(solid_Au,gold_material,"Logic_gold");
-new G4PVPlacement(0,G4ThreeVector(0,0,0.5*mm),Logic_Au,"aurum",logicWorld,false,0,checkOverlaps);
+new G4PVPlacement(0,G4ThreeVector(0,0,0.055*mm),Logic_Au,"aurum",logicWorld,false,0,checkOverlaps);
 G4VisAttributes* visAttributes = new G4VisAttributes(G4Colour(1.0, 1.0, 0.0));
 Logic_Au->SetVisAttributes(visAttributes);
 
