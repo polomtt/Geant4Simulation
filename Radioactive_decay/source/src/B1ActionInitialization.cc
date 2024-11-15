@@ -24,79 +24,59 @@
 // ********************************************************************
 //
 //
-/// \file B1RunAction.cc
-/// \brief Implementation of the B1RunAction class
+/// \file B1ActionInitialization.cc
+/// \brief Implementation of the B1ActionInitialization class
 
-#include "B1RunAction.hh"
+#include "B1ActionInitialization.hh"
 #include "B1PrimaryGeneratorAction.hh"
-#include "B1DetectorConstruction.hh"
-// #include "B1Run.hh"
-
-#include "G4RunManager.hh"
-#include "G4Run.hh"
-#include "G4AccumulableManager.hh"
-#include "G4LogicalVolumeStore.hh"
-#include "G4LogicalVolume.hh"
-#include "G4UnitsTable.hh"
-#include "G4SystemOfUnits.hh"
-
-// #include "MyAnalysis.hh"
-
-#include "Analysis.hh"
+#include "B1RunAction.hh"
+#include "B1EventAction.hh"
+#include "B1SteppingAction.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-B1RunAction::B1RunAction(const char *fN)
- : G4UserRunAction(),
-   fGoodEvents(0)
-{  
-    filename=fN;
-    	auto analysisManager = G4AnalysisManager::Instance();
+B1ActionInitialization::B1ActionInitialization(const char* run_file)
+ : G4VUserActionInitialization()
+{
+
+    //G4String help_string = run_file;
+    G4String help_string = "run_mac";
+//     help_string.erase(help_string.end()-4,help_string.end());
+    G4String ext = "_histo";
+    help_string = help_string + ext;
+    filename_to_pass=help_string.c_str();
 
 
-   // Register accumulable to the accumulable manager
-  G4AccumulableManager* accumulableManager = G4AccumulableManager::Instance();
-  accumulableManager->RegisterAccumulable(fGoodEvents);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-B1RunAction::~B1RunAction()
+B1ActionInitialization::~B1ActionInitialization()
 {}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void B1RunAction::EndOfRunAction(const G4Run* run)
+void B1ActionInitialization::BuildForMaster() const
 {
-  G4int nofEvents = run->GetNumberOfEvent();
-  if (nofEvents == 0) return;
-    
-  
-    G4AnalysisManager* analysisManager = G4AnalysisManager::Instance(); 
-  // Write and close the output file 
-  analysisManager->Write(); 
-  analysisManager->CloseFile(); 
-  
+  B1RunAction* runAction = new B1RunAction(filename_to_pass);
+  SetUserAction(runAction);
 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+void B1ActionInitialization::Build() const
+{
+  SetUserAction(new B1PrimaryGeneratorAction);
+  
+  B1RunAction* runAction = new B1RunAction(filename_to_pass);
+  SetUserAction(runAction);
+  
+  B1EventAction* eventAction = new B1EventAction(runAction);
+  SetUserAction(eventAction);
+  
+  SetUserAction(new B1SteppingAction(eventAction));
+}  
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void B1RunAction::BeginOfRunAction(const G4Run* run)  
-{ 
-  // Create/get analysis manager 
-  G4AnalysisManager* analysisManager = G4AnalysisManager::Instance(); 
-  analysisManager->SetVerboseLevel(1); 
-  analysisManager->OpenFile();
-
-  analysisManager->CreateNtuple("MyNtuple", "Edep");
- // X = D in CreateNtupleXColumn stands for G4double (I,F,D,S) 
-  analysisManager->CreateNtupleDColumn("Eabs");
-  analysisManager->FinishNtuple();
-
-}
-
 

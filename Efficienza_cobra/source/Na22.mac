@@ -1,0 +1,23 @@
+/control/verbose 0
+/run/verbose 0
+/tracking/verbose 0
+/run/initialize
+/gps/ang/type iso
+/gps/particle gamma
+/gps/pos/type Plane
+/gps/pos/shape Circle
+/gps/pos/radius 10 mm
+/gps/pos/centre 0.0 0.0 1 mm
+
+/gps/ene/type Arb
+/gps/hist/type arb
+/gps/hist/point	0.511	1.79
+/gps/hist/point	1.274   0.99
+
+/analysis/setFileName histo_gamma_na22.root
+/run/printProgress 100000
+/run/beamOn 100
+
+
+
+

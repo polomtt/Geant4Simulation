@@ -1,0 +1,65 @@
+/control/verbose 0
+/run/verbose 0
+/tracking/verbose 0
+/run/initialize
+/gps/ang/type iso
+/gps/particle gamma
+
+/gps/pos/type Plane
+/gps/direction 0 0 1
+/gps/pos/shape Circle
+/gps/pos/radius 0.01 mm
+/gps/pos/centre 0.0 0.0 -5 mm
+/gps/ang/type iso
+/gps/ang/maxtheta 15 deg
+/gps/pos/centre 0.0 0.0 1 mm
+/gps/ene/type Arb
+/gps/hist/type arb
+/gps/hist/point	0.00000	0.0000
+/gps/hist/point	0.00419	0.0000
+/gps/hist/point	0.00429	0.1570
+/gps/hist/point	0.00439	0.0000
+/gps/hist/point	0.03053	0.0000
+/gps/hist/point	0.03063	0.3390
+/gps/hist/point	0.03073	0.0000
+/gps/hist/point	0.03087	0.0000
+/gps/hist/point	0.03097	0.6220
+/gps/hist/point	0.03107	0.0000
+/gps/hist/point	0.03482	0.0000
+/gps/hist/point	0.03489	0.0000
+/gps/hist/point	0.03492	0.0588
+/gps/hist/point	0.03499	0.1140
+/gps/hist/point	0.03502	0.0000
+/gps/hist/point	0.03509	0.0000
+/gps/hist/point	0.03572	0.0000
+/gps/hist/point	0.03582	0.0351
+/gps/hist/point	0.03592	0.0000
+/gps/hist/point	0.05306	0.0000
+/gps/hist/point	0.05316	0.0214
+/gps/hist/point	0.05326	0.0000
+/gps/hist/point	0.07951	0.0000
+/gps/hist/point	0.07961	0.0265
+/gps/hist/point	0.07971	0.0000
+/gps/hist/point	0.08090	0.0000
+/gps/hist/point	0.08100	0.3290
+/gps/hist/point	0.08110	0.0000
+/gps/hist/point	0.27630	0.0000
+/gps/hist/point	0.27640	0.0716
+/gps/hist/point	0.27650	0.0000
+/gps/hist/point	0.30275	0.0000
+/gps/hist/point	0.30285	0.1834
+/gps/hist/point	0.30295	0.0000
+/gps/hist/point	0.35591	0.0000
+/gps/hist/point	0.35601	0.6205
+/gps/hist/point	0.35611	0.0000
+/gps/hist/point	0.38375	0.0000
+/gps/hist/point	0.38385	0.0894
+/gps/hist/point	0.38395	0.0000
+/gps/hist/inter Lin
+/analysis/setFileName histo_gamma_ba133.root
+/run/printProgress 100000
+/run/beamOn 10000
+
+
+
+

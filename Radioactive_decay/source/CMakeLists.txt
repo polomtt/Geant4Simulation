@@ -47,8 +47,6 @@ set(EXAMPLEB1_SCRIPTS
   exampleB1.in
   exampleB1.out
   init_vis.mac
-  Na22.mac
-  Ba133.mac
   vis.mac
   )
 

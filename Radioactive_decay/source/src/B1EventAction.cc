@@ -24,79 +24,84 @@
 // ********************************************************************
 //
 //
-/// \file B1RunAction.cc
-/// \brief Implementation of the B1RunAction class
+/// \file B1EventAction.cc
+/// \brief Implementation of the B1EventAction class
 
+#include "B1EventAction.hh"
 #include "B1RunAction.hh"
-#include "B1PrimaryGeneratorAction.hh"
-#include "B1DetectorConstruction.hh"
-// #include "B1Run.hh"
 
+#include "G4Event.hh"
 #include "G4RunManager.hh"
-#include "G4Run.hh"
-#include "G4AccumulableManager.hh"
-#include "G4LogicalVolumeStore.hh"
-#include "G4LogicalVolume.hh"
+
+#include "G4SDManager.hh"
+#include "G4HCofThisEvent.hh"
+#include "G4THitsMap.hh"
 #include "G4UnitsTable.hh"
 #include "G4SystemOfUnits.hh"
 
-// #include "MyAnalysis.hh"
-
-#include "Analysis.hh"
+#include "MyAnalysis.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-B1RunAction::B1RunAction(const char *fN)
- : G4UserRunAction(),
-   fGoodEvents(0)
-{  
-    filename=fN;
-    	auto analysisManager = G4AnalysisManager::Instance();
-
-
-   // Register accumulable to the accumulable manager
-  G4AccumulableManager* accumulableManager = G4AccumulableManager::Instance();
-  accumulableManager->RegisterAccumulable(fGoodEvents);
-}
+B1EventAction::B1EventAction(B1RunAction* runAction)
+: G4UserEventAction(),
+  fRunAction(runAction),
+  fCollID_cryst(-1)
+{} 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-B1RunAction::~B1RunAction()
+B1EventAction::~B1EventAction()
 {}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void B1RunAction::EndOfRunAction(const G4Run* run)
-{
-  G4int nofEvents = run->GetNumberOfEvent();
-  if (nofEvents == 0) return;
-    
-  
-    G4AnalysisManager* analysisManager = G4AnalysisManager::Instance(); 
-  // Write and close the output file 
-  analysisManager->Write(); 
-  analysisManager->CloseFile(); 
-  
-
+void B1EventAction::BeginOfEventAction(const G4Event*)
+{    
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void B1RunAction::BeginOfRunAction(const G4Run* run)  
+void B1EventAction::EndOfEventAction(const G4Event* event) 
 { 
-  // Create/get analysis manager 
+      // Get analysis manager 
   G4AnalysisManager* analysisManager = G4AnalysisManager::Instance(); 
-  analysisManager->SetVerboseLevel(1); 
-  analysisManager->OpenFile();
+    
+    G4HCofThisEvent* HCE = event->GetHCofThisEvent();
+  if(!HCE) return;
+               
+   // Get hits collections IDs
+  if (fCollID_cryst < 0) {
+    G4SDManager* SDMan = G4SDManager::GetSDMpointer();  
+    fCollID_cryst   = SDMan->GetCollectionID("crystal/edep");  
+  }
+  
+  //Energy in crystals : identify 'good events'
+  //
+  const G4double eThreshold = 1*keV;
+  G4int nbOfFired = 0;
+   
+  G4THitsMap<G4double>* evtMap = (G4THitsMap<G4double>*)(HCE->GetHC(fCollID_cryst));
+               
+  std::map<G4int,G4double*>::iterator itr;
+  for (itr = evtMap->GetMap()->begin(); itr != evtMap->GetMap()->end(); itr++) {
+    ///G4int copyNb  = (itr->first);
+    G4double edep = *(itr->second);
+    
+    analysisManager->FillNtupleDColumn(0,edep);
+    
+    analysisManager->AddNtupleRow(); 
+      
+    if (edep > eThreshold) nbOfFired++;
+    ///G4cout << "\n  cryst" << copyNb << ": " << edep/keV << " keV ";
+  }  
+  if (nbOfFired == 2) fRunAction->CountEvent();
 
-  analysisManager->CreateNtuple("MyNtuple", "Edep");
- // X = D in CreateNtupleXColumn stands for G4double (I,F,D,S) 
-  analysisManager->CreateNtupleDColumn("Eabs");
-  analysisManager->FinishNtuple();
+    
+ 
+  // accumulate statistics in run action  
 
+ 
 }
 
-
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

@@ -87,7 +87,7 @@ G4VPhysicalVolume* physWorld = new G4PVPlacement(0,G4ThreeVector(),logicWorld,"W
 
 double xx = 7. * mm *0.5;
 double yy = 7. * mm *0.5;
-double zz = 0.3 * mm *0.5;
+double zz = 10 * mm *0.5;
 
 G4Box* solidEnv = new G4Box("Envelope",xx,yy,zz);
 G4Material* detector_material = nist->FindOrBuildMaterial("G4_Si");
@@ -114,15 +114,12 @@ G4SDParticleFilter* alphaFilter = new G4SDParticleFilter("alphaFilter");
 bool gamma_source = true;
 bool neutron_source = false;
 
-if (gamma_source){
+
 alphaFilter->add("gamma");
 alphaFilter->add("e-");
-}
-if (neutron_source){
-alphaFilter->add("alpha");
-}
 
-// primitiv1->SetFilter(alphaFilter);
+
+primitiv1->SetFilter(alphaFilter);
 cryst->RegisterPrimitive(primitiv1);
 
 SetSensitiveDetector("Logic_detector",cryst);

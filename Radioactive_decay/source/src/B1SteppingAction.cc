@@ -24,79 +24,52 @@
 // ********************************************************************
 //
 //
-/// \file B1RunAction.cc
-/// \brief Implementation of the B1RunAction class
+/// \file B1SteppingAction.cc
+/// \brief Implementation of the B1SteppingAction class
 
-#include "B1RunAction.hh"
-#include "B1PrimaryGeneratorAction.hh"
+#include "B1SteppingAction.hh"
+#include "B1EventAction.hh"
 #include "B1DetectorConstruction.hh"
-// #include "B1Run.hh"
 
+#include "G4Step.hh"
+#include "G4Event.hh"
 #include "G4RunManager.hh"
-#include "G4Run.hh"
-#include "G4AccumulableManager.hh"
-#include "G4LogicalVolumeStore.hh"
 #include "G4LogicalVolume.hh"
-#include "G4UnitsTable.hh"
-#include "G4SystemOfUnits.hh"
-
-// #include "MyAnalysis.hh"
-
-#include "Analysis.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-B1RunAction::B1RunAction(const char *fN)
- : G4UserRunAction(),
-   fGoodEvents(0)
-{  
-    filename=fN;
-    	auto analysisManager = G4AnalysisManager::Instance();
-
-
-   // Register accumulable to the accumulable manager
-  G4AccumulableManager* accumulableManager = G4AccumulableManager::Instance();
-  accumulableManager->RegisterAccumulable(fGoodEvents);
-}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-B1RunAction::~B1RunAction()
+B1SteppingAction::B1SteppingAction(B1EventAction* eventAction)
+: G4UserSteppingAction(),
+  fEventAction(eventAction),
+  fScoringVolume(0)
 {}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void B1RunAction::EndOfRunAction(const G4Run* run)
+B1SteppingAction::~B1SteppingAction()
+{}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void B1SteppingAction::UserSteppingAction(const G4Step* step)
 {
-  G4int nofEvents = run->GetNumberOfEvent();
-  if (nofEvents == 0) return;
-    
-  
-    G4AnalysisManager* analysisManager = G4AnalysisManager::Instance(); 
-  // Write and close the output file 
-  analysisManager->Write(); 
-  analysisManager->CloseFile(); 
-  
+  if (!fScoringVolume) { 
+    const B1DetectorConstruction* detectorConstruction
+      = static_cast<const B1DetectorConstruction*>
+        (G4RunManager::GetRunManager()->GetUserDetectorConstruction());
+    fScoringVolume = detectorConstruction->GetScoringVolume();   
+  }
 
+  // get volume of the current step
+  G4LogicalVolume* volume 
+    = step->GetPreStepPoint()->GetTouchableHandle()
+      ->GetVolume()->GetLogicalVolume();
+      
+  // check if we are in scoring volume
+  if (volume != fScoringVolume) return;
+
+ 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void B1RunAction::BeginOfRunAction(const G4Run* run)  
-{ 
-  // Create/get analysis manager 
-  G4AnalysisManager* analysisManager = G4AnalysisManager::Instance(); 
-  analysisManager->SetVerboseLevel(1); 
-  analysisManager->OpenFile();
-
-  analysisManager->CreateNtuple("MyNtuple", "Edep");
- // X = D in CreateNtupleXColumn stands for G4double (I,F,D,S) 
-  analysisManager->CreateNtupleDColumn("Eabs");
-  analysisManager->FinishNtuple();
-
-}
-
 
