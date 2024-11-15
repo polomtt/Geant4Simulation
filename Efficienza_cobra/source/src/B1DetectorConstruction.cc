@@ -80,6 +80,16 @@ G4Box* solidWorld =  new G4Box("World",0.5*world_sizeXY, 0.5*world_sizeXY, 0.5*w
 G4LogicalVolume* logicWorld = new G4LogicalVolume(solidWorld,world_mat,"World");
 G4VPhysicalVolume* physWorld = new G4PVPlacement(0,G4ThreeVector(),logicWorld,"World",0,false,0,checkOverlaps);
 
+/***************************/
+// Gold sheet
+/***************************/
+
+G4Box* solid_Au = new G4Box("Envelope",1.*mm,1.*mm,0.1*um);
+G4Material* gold_material = nist->FindOrBuildMaterial("G4_Au");
+G4LogicalVolume* Logic_Au = new G4LogicalVolume(solid_Au,gold_material,"Logic_gold");
+new G4PVPlacement(0,G4ThreeVector(0,0,0.5*mm),Logic_Au,"aurum",logicWorld,false,0,checkOverlaps);
+G4VisAttributes* visAttributes = new G4VisAttributes(G4Colour(1.0, 1.0, 0.0));
+Logic_Au->SetVisAttributes(visAttributes);
 
 /***************************/
 // Detector
@@ -91,10 +101,6 @@ double zz = 0.1 * mm *0.5;
 
 G4Box* solidEnv = new G4Box("Envelope",xx,yy,zz);
 G4Material* detector_material = nist->FindOrBuildMaterial("G4_Si");
-
-// G4Tubs* solidEnv = new G4Tubs("Envelope",0.*cm,0.5*radius,0.5*lenght,0*deg,360*deg);
-// G4Material* detector_material = nist->FindOrBuildMaterial("G4_PLASTIC_SC_VINYLTOLUENE");
-
 G4LogicalVolume* Logic_detector = new G4LogicalVolume(solidEnv,detector_material,"Logic_detector");
 new G4PVPlacement(0,G4ThreeVector(),Logic_detector,"crystal",logicWorld,false,0,checkOverlaps);
     
