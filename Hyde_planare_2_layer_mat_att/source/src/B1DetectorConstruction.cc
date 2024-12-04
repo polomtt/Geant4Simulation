@@ -129,9 +129,9 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
     Si_detector->SetVisAttributes(Color_Si);
     new G4PVPlacement(0,G4ThreeVector(0,0,0),Si_detector,"crystal",logicWorld,false,0,checkOverlaps);          //overlaps checking
 
-    // layer boro-10
+    if(spes_strat_sup_b10>0){
+    // layer ghe-sboro-10
     G4Box* strato_sup_box_b10 = new G4Box("box_b10",pixel_size,pixel_size,spes_strat_sup_b10); //its size
-      
     G4Isotope* iso_B10 = new G4Isotope("Boron_10",5,10,10*g/mole);
     G4Isotope* iso_B11 = new G4Isotope("Boron_11",5,11,11*g/mole);
     G4Element* elB  = new G4Element("Boron","B",2);
@@ -145,9 +145,10 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
     G4VisAttributes* Color_b10 = new G4VisAttributes(G4Colour::Red());
     active_material_sup_b10->SetVisAttributes(Color_b10);
     new G4PVPlacement(0,G4ThreeVector(0,0,lenght_silicon+free_space_hole+spes_strat_sup_b10),active_material_sup_b10,"active_material_sup_b10",logicWorld,false,0,checkOverlaps);
+    }
 
+    if(spes_strat_sup_li6>0){
     // layer litio-6
-
     G4Box* strato_sup_box_li6 = new G4Box("box_li6",pixel_size,pixel_size,spes_strat_sup_li6); //its size
 
     G4Material* Fluorine = nist->FindOrBuildMaterial("G4_F");
@@ -162,10 +163,11 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
     act_Mat_li6->AddElement(elLi,50.*perCent);
     
     G4LogicalVolume* active_material_sup_li6 = new G4LogicalVolume(strato_sup_box_li6,act_Mat_li6,"active_material_part_detector_superficie_li6");
-
+    
     G4VisAttributes* Color_Li = new G4VisAttributes(G4Colour::Green());
     active_material_sup_li6->SetVisAttributes(Color_Li);
     new G4PVPlacement(0,G4ThreeVector(0,0,lenght_silicon+free_space_hole+spes_strat_sup_li6+spes_strat_sup_b10*2),active_material_sup_li6,"active_material_sup",logicWorld,false,0,checkOverlaps);
+    }
 
     return physWorld;
 }

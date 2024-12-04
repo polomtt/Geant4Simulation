@@ -48,7 +48,7 @@ myfile <<spess_b10<<";"<<spess_li6<<";"<<det_ev<<";"<<tot_ev<<endl;
 myfile.close();
 
 h_qlong_ch0->SetTitle(TString::Format("hist_b10_%.1fum_li6_%.1fum",spess_b10,spess_li6));
-h_qlong_ch0->SaveAs(TString::Format("hist_b10_%.1fum_li6_%.1fum.png",spess_b10,spess_li6));
+cnv_histo_0->SaveAs(TString::Format("hist_b10_%.1fum_li6_%.1fum.png",spess_b10,spess_li6));
 
 return;
 }
