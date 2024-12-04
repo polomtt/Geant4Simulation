@@ -66,6 +66,7 @@ void smear_gaussian(TH1F* histo,TH1F* histo_sme){
         float energy = histo->GetBinCenter(i);
         float fano_factor = 0.115;
         float energy_res_exp = 1./sqrt((energy*1000)/3.6);
+        // float sigma = 0.02;
         float sigma = sqrt(energy_res_exp*energy*energy_res_exp*energy+0.200*3.6*0.200*3.6);
         
         for(int j=0;j<count;j++)

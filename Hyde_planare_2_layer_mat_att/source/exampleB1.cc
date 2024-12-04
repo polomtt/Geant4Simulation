@@ -33,7 +33,7 @@
 #include "G4RunManagerFactory.hh"
 
 #include "G4UImanager.hh"
-// #include "QBBC.hh"
+#include "QBBC.hh"
 
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
@@ -42,10 +42,7 @@
 
 #include "B1RunAction.hh"
 
-#include "QGSP_BERT_HP.hh"
-#include "G4RadioactiveDecayPhysics.hh"
-// #include "PhysicsList.hh"
-// #include "FTFP_BERT_LIV.hh"
+#include "QGSP_BIC_HP.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -75,15 +72,9 @@ int main(int argc,char** argv)
 
    // Physics list
   // G4VModularPhysicsList* physicsList = new QGSP_BERT_HP;
-  // physicsList->SetVerboseLevel(1);
-  // runManager->SetUserInitialization(physicsList);
-
-  G4VModularPhysicsList* physicsList = new QGSP_BERT_HP;
-  physicsList->RegisterPhysics(new G4RadioactiveDecayPhysics());
+  G4VModularPhysicsList* physicsList = new QGSP_BIC_HP;
+  physicsList->SetVerboseLevel(1);
   runManager->SetUserInitialization(physicsList);
-  
-
-  // runManager->SetUserInitialization(new PhysicsList);
 
 
   // User action initialization
