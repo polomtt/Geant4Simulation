@@ -16,8 +16,11 @@ unique_list = list(set(df["spess_b10[um]"]))
 unique_list.sort() 
 
 for sp_b10 in unique_list:
+    print("******************")
     print(sp_b10)
     slice = df[df["spess_b10[um]"]==sp_b10]
+    
+    print(slice)
     
     plt.plot(slice["spess_li6[um]"],slice["det_ev"]/slice["tot_ev"],label="{}um di b10".format(sp_b10))
 
