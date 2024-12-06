@@ -51,9 +51,9 @@ myfile.close();
 
 std::cout<<det_ev<<endl;
 
-h_qlong_ch0->SetTitle(TString::Format("hisot_%.1f_%.1f_%.1f",distance_from_hole,radius_hole,pixel_size));
-cnv_histo_0->SaveAs(TString::Format("histo_%.1f_%.1f_%.1f.png",distance_from_hole,radius_hole,pixel_size));
-h_qlong_ch0->SaveAs(TString::Format("histo_%.1f_%.1f_%.1f.root",distance_from_hole,radius_hole,pixel_size));
+h_qlong_ch0->SetTitle(TString::Format("hisot_%.0f_b10_%.0f_li6_%.0f_%.0f",distance_from_hole,radius_hole_B,radius_hole_L,pixel_size));
+cnv_histo_0->SaveAs(TString::Format("histo_%.0f_b10_%.0f_li6_%.0f_%.0f.png",distance_from_hole,radius_hole_B,radius_hole_L,pixel_size));
+h_qlong_ch0->SaveAs(TString::Format("histo_%.0f_b10_%.0f_li6_%.0f_%.0f.root",distance_from_hole,radius_hole_B,radius_hole_L,pixel_size));
 
 return;
 }

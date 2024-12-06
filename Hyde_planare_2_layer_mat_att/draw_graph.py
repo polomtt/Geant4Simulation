@@ -8,7 +8,7 @@ import sys
 eventi_simulati = 100000
 
 
-df = pd.read_csv("build/efficienza_server", sep=';')
+df = pd.read_csv(sys.argv[1], sep=';')
 
 # ;spess_li6[um];det_ev;tot_ev
 
